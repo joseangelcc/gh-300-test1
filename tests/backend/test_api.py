@@ -1,11 +1,4 @@
-from fastapi.testclient import TestClient
-
-from src.app import app
-
-client = TestClient(app)
-
-
-def test_signup_rejects_duplicate_email():
+def test_signup_rejects_duplicate_email(client):
     activity_name = "Chess Club"
     email = "newstudent@mergington.edu"
 
@@ -23,7 +16,7 @@ def test_signup_rejects_duplicate_email():
     assert duplicate_response.json()["detail"] == "Student already signed up for this activity"
 
 
-def test_delete_participant_removes_email():
+def test_delete_participant_removes_email(client):
     activity_name = "Chess Club"
     email = "remove.me@mergington.edu"
 
