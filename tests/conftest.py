@@ -1,0 +1,21 @@
+import copy
+
+import pytest
+from fastapi.testclient import TestClient
+
+from src.app import app, activities
+
+
+@pytest.fixture(autouse=True)
+def reset_activities():
+    original_state = copy.deepcopy(activities)
+    activities.clear()
+    activities.update(copy.deepcopy(original_state))
+    yield
+    activities.clear()
+    activities.update(copy.deepcopy(original_state))
+
+
+@pytest.fixture()
+def client():
+    return TestClient(app)
